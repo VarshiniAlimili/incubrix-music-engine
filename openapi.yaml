@@ -1,0 +1,37 @@
+openapi: 3.1.0
+info:
+  title: IncuBrix Background Music Engine
+  version: 0.1.0
+paths:
+  /api/v1/music/jobs:
+    post:
+      summary: Submit a music generation job
+      parameters:
+        - in: header
+          name: Idempotency-Key
+          required: true
+          schema: { type: string, minLength: 1 }
+      responses:
+        "202":
+          description: Job accepted
+        "400":
+          description: Invalid request
+  /api/v1/jobs/{job_id}:
+    get:
+      summary: Get job status
+      parameters:
+        - in: path
+          name: job_id
+          required: true
+          schema: { type: string }
+      responses:
+        "200": { description: Job status }
+        "404": { description: Job not found }
+  /health:
+    get:
+      responses:
+        "200": { description: Process health }
+  /ready:
+    get:
+      responses:
+        "200": { description: Service readiness }
